@@ -25,9 +25,14 @@ function App() {
   const handleSortByPopularity = () => {
     const SortedArr = [...celebs].sort(
       (contacta, contactb) => contactb.popularity - contacta.popularity
-    )
+    );
     console.log(SortedArr);
     setCelebs(SortedArr);
+  };
+
+  const handleDelete = (id) => {
+    const newList = celebs.filter((celeb) => celeb.id !== id);
+    setCelebs(newList);
   };
 
   return (
@@ -63,6 +68,11 @@ function App() {
                 <td>{Math.round(celebs.popularity)}</td>
                 <td>{celebs.wonOscar === true ? "🏆" : ""} </td>
                 <td>{celebs.wonEmmy === true ? "🏆" : ""}</td>
+                <td>
+                  <button onClick={() => handleDelete(celebs.id)}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             );
           })}
