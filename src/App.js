@@ -3,7 +3,7 @@ import allContacts from "./contacts.json";
 import { useState } from "react";
 
 function App() {
-  const contacts = allContacts.slice(0, 5);
+  let contacts = allContacts.slice(0, 5);
   const [celebs, setCelebs] = useState(contacts);
 
   const handleAddRandom = () => {
@@ -11,14 +11,31 @@ function App() {
     const randomIndex = Math.floor(Math.random() * restOfCelebs.length + 1);
     const newcontact = restOfCelebs[randomIndex];
     setCelebs((contacts) => [...contacts, newcontact]);
+    console.log("Count Celebs", celebs);
+  };
+
+  const handleSortByname = () => {
+    const SortedArr = [...celebs].sort((contacta, contactb) =>
+      contacta.name.toLowerCase() > contactb.name.toLowerCase() ? 1 : -1
+    );
+    console.log("After", SortedArr);
+    setCelebs(SortedArr);
+  };
+
+  const handleSortByPopularity = () => {
+    const SortedArr = [...celebs].sort(
+      (contacta, contactb) => contactb.popularity - contacta.popularity
+    )
+    console.log(SortedArr);
+    setCelebs(SortedArr);
   };
 
   return (
     <div className="App">
       <h1>IronContact</h1>
       <button onClick={handleAddRandom}>Add Random Contact</button>
-      <button onClick={handleAddRandom}>Sort by Popularity</button>
-      <button onClick={handleAddRandom}>Sort by Name</button>
+      <button onClick={handleSortByname}>Sort by Name</button>
+      <button onClick={handleSortByPopularity}>Sort by Popularity</button>
 
       <table>
         <thead>
@@ -43,7 +60,7 @@ function App() {
                   />
                 </td>
                 <td>{celebs.name}</td>
-                <td>{celebs.popularity}</td>
+                <td>{Math.round(celebs.popularity)}</td>
                 <td>{celebs.wonOscar === true ? "🏆" : ""} </td>
                 <td>{celebs.wonEmmy === true ? "🏆" : ""}</td>
               </tr>
