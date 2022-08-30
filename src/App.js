@@ -3,22 +3,26 @@ import allContacts from "./contacts.json";
 import { useState } from "react";
 
 function App() {
-  let contacts = allContacts.slice(0, 5);
+  const contacts = allContacts.slice(0, 5);
   const [celebs, setCelebs] = useState(contacts);
 
   const handleAddRandom = () => {
     const restOfCelebs = allContacts.slice(5);
     const randomIndex = Math.floor(Math.random() * restOfCelebs.length + 1);
     const newcontact = restOfCelebs[randomIndex];
-    setCelebs((contacts) => [...contacts, newcontact]);
-    console.log("Count Celebs", celebs);
+    console.log("New random", newcontact);
+
+    const index = celebs.findIndex((celeb) => celeb.id === newcontact.id);
+
+    if (index === -1) {
+      setCelebs((contacts) => [...contacts, newcontact]);
+    }
   };
 
   const handleSortByname = () => {
     const SortedArr = [...celebs].sort((contacta, contactb) =>
       contacta.name.toLowerCase() > contactb.name.toLowerCase() ? 1 : -1
     );
-    console.log("After", SortedArr);
     setCelebs(SortedArr);
   };
 
@@ -26,7 +30,6 @@ function App() {
     const SortedArr = [...celebs].sort(
       (contacta, contactb) => contactb.popularity - contacta.popularity
     );
-    console.log(SortedArr);
     setCelebs(SortedArr);
   };
 
