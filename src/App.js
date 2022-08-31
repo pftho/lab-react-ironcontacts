@@ -8,10 +8,8 @@ function App() {
 
   const handleAddRandom = () => {
     const restOfCelebs = allContacts.slice(5);
-    const randomIndex = Math.floor(Math.random() * restOfCelebs.length + 1);
+    const randomIndex = Math.floor(Math.random() * restOfCelebs.length);
     const newcontact = restOfCelebs[randomIndex];
-    console.log("New random", newcontact);
-
     const index = celebs.findIndex((celeb) => celeb.id === newcontact.id);
 
     if (index === -1) {
